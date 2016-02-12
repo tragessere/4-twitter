@@ -69,6 +69,33 @@ class TwitterClient: BDBOAuth1SessionManager {
     })
   }
   
+  func favoriteWithId(id: Int64, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+    let params : NSDictionary = ["id": NSNumber(longLong: id)]
+    
+    POST("1.1/favorites/create.json",
+      parameters: params,
+      progress: nil,
+      success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+        let tweet = Tweet.init(dictionary: response as! NSDictionary)
+        completion(tweet: tweet, error: nil)
+      }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+        completion(tweet: nil, error: error)
+    })
+  }
+  
+  func unFavoriteWithId(id: Int64, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+    let params : NSDictionary = ["id": NSNumber(longLong: id)]
+    
+    POST("1.1/favorites/destroy.json",
+      parameters: params,
+      progress: nil,
+      success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+        let tweet = Tweet.init(dictionary: response as! NSDictionary)
+        completion(tweet: tweet, error: nil)
+      }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+        completion(tweet: nil, error: error)
+    })
+  }
   
   func openURL(url: NSURL) {
     fetchAccessTokenWithPath(
@@ -88,7 +115,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             let user = User(dictionary: response as! NSDictionary)
             User.currentUser = user            
             
-            print("User: \(user.name)")
             self.loginCompletion?(user: user, error: nil)
             
           }, failure: { (task: NSURLSessionDataTask?, error: NSError!) -> Void in
