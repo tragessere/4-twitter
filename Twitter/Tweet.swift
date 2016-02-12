@@ -39,6 +39,7 @@ class Tweet: NSObject {
     }
     
     let formatter = NSDateFormatter()
+    formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
     formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
     createdAt = formatter.dateFromString(createdAtString!)
     

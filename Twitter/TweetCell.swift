@@ -40,9 +40,13 @@ class TweetCell: UITableViewCell {
       usernameLabel.text = "@" + tweet.user!.screenName!
       
       
-      let formatter = NSDateFormatter()
-      formatter.dateFormat = "MMM d"
-      timeLabel.text = formatter.stringFromDate(tweet.createdAt!)
+      if tweet.createdAt != nil {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM d"
+        timeLabel.text = formatter.stringFromDate(tweet.createdAt!)
+      } else {
+        timeLabel.text = ""
+      }
       
       tweetTextLabel.text = tweet.text
       
