@@ -23,10 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if User.currentUser != nil {
       //Go to login screen
       print("current user detected: \(User.currentUser?.name)")
-      let nc = UINavigationController.init()
-      let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as UIViewController
-      nc.setViewControllers([vc], animated: false)
-      window?.rootViewController = nc
+//      let nc = UINavigationController.init()
+      
+//      let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController") as UIViewController
+//      nc.setViewControllers([vc], animated: false)
+      let vc = storyboard.instantiateViewControllerWithIdentifier("MainNavigationController") as! UINavigationController
+      window?.rootViewController = vc
     }
     
     return true

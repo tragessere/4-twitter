@@ -9,9 +9,14 @@
 import UIKit
 
 class Tweet: NSObject {
+  //Current tweet info
   var id: Int64!
-  
   var user: User?
+  //Info of the original tweet if this is a retweet.
+  var tweetIsRetweet: Bool?
+  var originalId: Int64?
+  var originalUser: User?
+  
   var text: String?
   var createdAtString: String?
   var createdAt: NSDate?
@@ -21,10 +26,13 @@ class Tweet: NSObject {
   var favoriteCount: Int?
 
   init(dictionary: NSDictionary) {
-    //error here when casting the regular id straight to a 64-bit int.
+    print(dictionary)
+    //error here when casting the regular id straight to a 64-bit int. (but why?)
     id = Int64(dictionary["id_str"] as! String)
     
     user = User(dictionary: dictionary["user"] as! NSDictionary)
+    
+    
     text = dictionary["text"] as? String
     createdAtString = dictionary["created_at"] as? String
     retweetCount = dictionary["retweet_count"] as? Int
@@ -43,9 +51,15 @@ class Tweet: NSObject {
     formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
     createdAt = formatter.dateFromString(createdAtString!)
     
-    //Retweeted messages return a favorite count of '0'
+    //Retweeted messages contain the original tweet inside an inner object
     if let retweeted = dictionary["retweeted_status"] as? NSDictionary {
+      originalId = Int64(retweeted["id_str"] as! String)
+      originalUser = User(dictionary: retweeted["user"] as! NSDictionary)
+      
+      text = retweeted["text"] as? String
+//      retweetCount = retweeted["retweet_count"] as? Int
       favoriteCount = retweeted["favorite_count"] as? Int
+      
     }
   }
   
@@ -54,7 +68,7 @@ class Tweet: NSObject {
     var tweets = [Tweet]()
     
     for dictionary in array {
-//      print(dictionary)
+      print(dictionary)
       tweets.append(Tweet(dictionary: dictionary))
     }
     

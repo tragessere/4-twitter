@@ -68,8 +68,10 @@ class TweetCell: UITableViewCell {
         favoriteImageView.image = UIImage(named: "like-action")
       }
       
-      if tweet.isRetweeted! {
+      if tweet.user?.id == User.currentUser?.id {
         retweetImageView.image = UIImage(named: "retweet-action-inactive")
+      } else if tweet.isRetweeted! {
+        retweetImageView.image = UIImage(named: "retweet-action-on")
       } else {
         retweetImageView.image = UIImage(named: "retweet-action")
       }
@@ -97,10 +99,68 @@ class TweetCell: UITableViewCell {
   
   func retweetTapped(view: AnyObject) {
     print("tapped retweet")
+    
+    if tweet.user?.id == User.currentUser?.id {
+      print("can't retweet your own message")
+      //Can't retweet your own tweets
+      return
+      
+    } else if tweet.isRetweeted! {
+      print("un-retweet")
+      
+      TwitterClient.sharedInstance.unRetweetWithId( tweet.originalId == nil ? tweet.id! : tweet.originalId!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error retweeting: \(error!.description)")
+          return
+        }
+        
+//        self.tweet.isRetweeted = tweet?.isRetweeted
+//        self.tweet.retweetCount = tweet?.retweetCount
+//        
+//        if tweet != nil && tweet?.favoriteCount != nil {
+//          self.retweetLabel.text = String(tweet!.retweetCount!)
+//        } else {
+//          self.retweetLabel.text = "0"
+//        }
+        
+        self.tweet.isRetweeted = false
+        self.tweet.retweetCount!--
+        self.retweetLabel.text = String(tweet?.retweetCount)
+        
+        self.retweetImageView.image = UIImage(named: "retweet-action")
+      })
+      
+    } else {
+      print("retweet")
+      TwitterClient.sharedInstance.retweetWithId( tweet.originalId == nil ? tweet.id! : tweet.originalId!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error retweeting: \(error!.description)")
+          return
+        }
+        
+//        self.tweet.isRetweeted = tweet?.isRetweeted
+//        self.tweet.retweetCount = tweet?.retweetCount
+//        
+//        if tweet != nil && tweet?.favoriteCount != nil {
+//          self.retweetLabel.text = String(tweet!.retweetCount!)
+//        } else {
+//          self.retweetLabel.text = "0"
+//        }
+        
+        self.tweet.isRetweeted = true
+        self.tweet.retweetCount!++
+        self.retweetLabel.text = String(tweet?.retweetCount)
+        
+        self.retweetImageView.image = UIImage(named: "retweet-action-on")
+      })
+      
+    }
+    
   }
   
   func favoriteTapped(view: AnyObject) {
-    print("tapped favorite")
     
     if !tweet.isFavorited! {
       TwitterClient.sharedInstance.favoriteWithId(tweet.id!, completion: {
@@ -113,7 +173,7 @@ class TweetCell: UITableViewCell {
         self.tweet.isFavorited = tweet?.isFavorited
         self.tweet.favoriteCount = tweet?.favoriteCount
         
-        if tweet!.favoriteCount != nil {
+        if tweet != nil && tweet!.favoriteCount != nil {
           self.favoriteLabel.text = String(tweet!.favoriteCount!)
         } else {
           self.favoriteLabel.text = "0"

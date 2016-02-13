@@ -14,6 +14,8 @@ let userDidLoginNotification = "userDidLoginNotification"
 let userDidLogoutNotification = "userDidLogoutNotification"
 
 class User: NSObject {
+  var id: Int64?
+  
   var name: String?
   var screenName: String?
   var profileImageUrl: String?
@@ -37,6 +39,8 @@ class User: NSObject {
     super.init()
     
     self.dictionary = dictionary
+    
+    id = Int64(dictionary["id_str"] as! String)
     
     name = dictionary["name"] as? String
     screenName = dictionary["screen_name"] as? String
