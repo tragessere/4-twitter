@@ -28,6 +28,7 @@ class ViewController: UIViewController {
       (user: User?, error: NSError?) in
         if user != nil {
           //Perform segue
+          print("perform segue")
           self.performSegueWithIdentifier("loginSegue", sender: self)
         } else {
           //hand login error

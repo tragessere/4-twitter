@@ -26,7 +26,7 @@ class Tweet: NSObject {
   var favoriteCount: Int?
 
   init(dictionary: NSDictionary) {
-    print(dictionary)
+//    print(dictionary)
     //error here when casting the regular id straight to a 64-bit int. (but why?)
     id = Int64(dictionary["id_str"] as! String)
     
@@ -53,13 +53,19 @@ class Tweet: NSObject {
     
     //Retweeted messages contain the original tweet inside an inner object
     if let retweeted = dictionary["retweeted_status"] as? NSDictionary {
+      tweetIsRetweet = true
+      
       originalId = Int64(retweeted["id_str"] as! String)
       originalUser = User(dictionary: retweeted["user"] as! NSDictionary)
       
       text = retweeted["text"] as? String
-//      retweetCount = retweeted["retweet_count"] as? Int
+      retweetCount = retweeted["retweet_count"] as? Int
       favoriteCount = retweeted["favorite_count"] as? Int
       
+    } else {
+      tweetIsRetweet = false
+      
+      originalId = id
     }
   }
   
@@ -68,7 +74,6 @@ class Tweet: NSObject {
     var tweets = [Tweet]()
     
     for dictionary in array {
-      print(dictionary)
       tweets.append(Tweet(dictionary: dictionary))
     }
     

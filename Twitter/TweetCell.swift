@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import KILabel
+
+protocol TweetCellDelegate {
+  func tweetCell(cell: TweetCell, didTapURL url: NSURL)
+  func tweetCell(cell: TweetCell, didTapUser username: String)
+  func tweetCell(cell: TweetCell, didTapHashtag hashtag: String)
+}
 
 class TweetCell: UITableViewCell {
   
@@ -14,13 +21,15 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var usernameLabel: UILabel!
   @IBOutlet weak var timeLabel: UILabel!
-  @IBOutlet weak var tweetTextLabel: UILabel!
+  @IBOutlet weak var tweetTextLabel: KILabel!
   @IBOutlet weak var retweetView: UIView!
   @IBOutlet weak var retweetLabel: UILabel!
   @IBOutlet weak var retweetImageView: UIImageView!
   @IBOutlet weak var favoriteImageView: UIImageView!
   @IBOutlet weak var favoriteView: UIView!
   @IBOutlet weak var favoriteLabel: UILabel!
+  
+  var delegate: TweetCellDelegate?
   
   var tweet: Tweet! {
     didSet {
@@ -36,8 +45,13 @@ class TweetCell: UITableViewCell {
         profileImageView.backgroundColor = tweet.user?.linkColor
       }
     
-      nameLabel.text = tweet.user?.name
-      usernameLabel.text = "@" + tweet.user!.screenName!
+      if tweet.tweetIsRetweet! {
+        nameLabel.text = tweet.originalUser?.name
+        usernameLabel.text = "@" + tweet.originalUser!.screenName!
+      } else {
+        nameLabel.text = tweet.user?.name
+        usernameLabel.text = "@" + tweet.user!.screenName!
+      }
       
       
       if tweet.createdAt != nil {
@@ -48,6 +62,7 @@ class TweetCell: UITableViewCell {
         timeLabel.text = ""
       }
       
+      tweetTextLabel.tintColor = User.currentUser?.linkColor //tweet.user?.linkColor
       tweetTextLabel.text = tweet.text
       
       if tweet.retweetCount != nil {
@@ -74,6 +89,12 @@ class TweetCell: UITableViewCell {
         retweetImageView.image = UIImage(named: "retweet-action-on")
       } else {
         retweetImageView.image = UIImage(named: "retweet-action")
+      }
+      
+      
+      
+      tweetTextLabel.urlLinkTapHandler = { label, url, range in
+        self.delegate?.tweetCell(self, didTapURL: NSURL(string: url)!)
       }
     }
   }
@@ -108,50 +129,41 @@ class TweetCell: UITableViewCell {
     } else if tweet.isRetweeted! {
       print("un-retweet")
       
-      TwitterClient.sharedInstance.unRetweetWithId( tweet.originalId == nil ? tweet.id! : tweet.originalId!, completion: {
+      TwitterClient.sharedInstance.unRetweetWithId(tweet.originalId!, completion: {
         (tweet, error) -> () in
         if error != nil {
           print("error retweeting: \(error!.description)")
           return
         }
         
-//        self.tweet.isRetweeted = tweet?.isRetweeted
-//        self.tweet.retweetCount = tweet?.retweetCount
-//        
-//        if tweet != nil && tweet?.favoriteCount != nil {
-//          self.retweetLabel.text = String(tweet!.retweetCount!)
-//        } else {
-//          self.retweetLabel.text = "0"
-//        }
-        
         self.tweet.isRetweeted = false
-        self.tweet.retweetCount!--
-        self.retweetLabel.text = String(tweet?.retweetCount)
+        if tweet != nil && tweet!.retweetCount != nil {
+          self.tweet.retweetCount!--
+          self.retweetLabel.text = String(self.tweet!.retweetCount!)
+        } else {
+          self.retweetLabel.text = "0"
+        }
         
         self.retweetImageView.image = UIImage(named: "retweet-action")
       })
       
     } else {
       print("retweet")
-      TwitterClient.sharedInstance.retweetWithId( tweet.originalId == nil ? tweet.id! : tweet.originalId!, completion: {
+      TwitterClient.sharedInstance.retweetWithId(tweet.originalId!, completion: {
         (tweet, error) -> () in
         if error != nil {
           print("error retweeting: \(error!.description)")
           return
         }
         
-//        self.tweet.isRetweeted = tweet?.isRetweeted
-//        self.tweet.retweetCount = tweet?.retweetCount
-//        
-//        if tweet != nil && tweet?.favoriteCount != nil {
-//          self.retweetLabel.text = String(tweet!.retweetCount!)
-//        } else {
-//          self.retweetLabel.text = "0"
-//        }
-        
         self.tweet.isRetweeted = true
-        self.tweet.retweetCount!++
-        self.retweetLabel.text = String(tweet?.retweetCount)
+        
+        if tweet != nil && tweet!.retweetCount != nil {
+          self.tweet.retweetCount!++
+          self.retweetLabel.text = String(self.tweet!.retweetCount!)
+        } else {
+          self.retweetLabel.text = "0"
+        }
         
         self.retweetImageView.image = UIImage(named: "retweet-action-on")
       })

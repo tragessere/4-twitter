@@ -8,6 +8,7 @@
 
 import UIKit
 import BDBOAuth1Manager
+import SafariServices
 
 let twitterConsumerKey = "Ei1Jw1RYGNwsHRK9phLX19PlE"
 let twitterConsumerSecret = "xVQUXDJtc6rApq6eMQS9Jk54wFKaMx7SZU4pJDPUxBFQj2nUcJ"
@@ -18,6 +19,8 @@ let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 class TwitterClient: BDBOAuth1SessionManager {
   
   var loginCompletion: ((user: User?, error: NSError?) -> ())?
+  
+  var svc: SFSafariViewController?
   
   class var sharedInstance: TwitterClient {
     struct Static {
@@ -61,7 +64,11 @@ class TwitterClient: BDBOAuth1SessionManager {
         print("Got request token")
         
         let authURL = NSURL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token)")
-        UIApplication.sharedApplication().openURL(authURL!)
+        
+        self.svc = SFSafariViewController(URL: authURL!)
+        let activeVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+        activeVC?.presentViewController(self.svc!, animated: true, completion: nil)
+//        UIApplication.sharedApplication().openURL(authURL!)
       },
       failure: { (error: NSError!) -> Void in
         print("Failed to get request token\n \(error)")
@@ -137,14 +144,19 @@ class TwitterClient: BDBOAuth1SessionManager {
           "1.1/account/verify_credentials.json",
           parameters: nil,
           success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            ///print("user: \(response!)")
+            print("user: \(response!)")
             let user = User(dictionary: response as! NSDictionary)
-            User.currentUser = user            
+            User.currentUser = user
+            
+            self.svc?.dismissViewControllerAnimated(true, completion: nil)
             
             self.loginCompletion?(user: user, error: nil)
             
           }, failure: { (task: NSURLSessionDataTask?, error: NSError!) -> Void in
             print("Error getting user")
+            
+            self.svc?.dismissViewControllerAnimated(true, completion: nil)
+            
             self.loginCompletion?(user: nil, error: error)
         })
         

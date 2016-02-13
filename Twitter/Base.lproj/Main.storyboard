@@ -86,7 +86,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zqj-Vl-RJo">
                                             <rect key="frame" x="8" y="8" width="584" height="51"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghz-rH-kwD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghz-rH-kwD">
                                                     <rect key="frame" x="142" y="2" width="62" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,7 +110,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNo-LQ-a7Z">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNo-LQ-a7Z" customClass="KILabel">
                                                     <rect key="frame" x="64" y="26" width="71" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -130,6 +130,7 @@
                                                 <constraint firstItem="gdJ-9o-fFg" firstAttribute="baseline" secondItem="evb-62-CHn" secondAttribute="baseline" id="d2a-7e-icT"/>
                                                 <constraint firstItem="bNo-LQ-a7Z" firstAttribute="top" secondItem="evb-62-CHn" secondAttribute="bottom" constant="8" id="eNi-Mu-RuG"/>
                                                 <constraint firstItem="7dE-j5-Wae" firstAttribute="top" secondItem="Zqj-Vl-RJo" secondAttribute="top" id="jGa-Ny-QJW"/>
+                                                <constraint firstItem="gdJ-9o-fFg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ghz-rH-kwD" secondAttribute="trailing" constant="8" id="lZc-4S-Uny"/>
                                                 <constraint firstItem="evb-62-CHn" firstAttribute="leading" secondItem="7dE-j5-Wae" secondAttribute="trailing" constant="8" id="qd4-bv-7vu"/>
                                                 <constraint firstItem="bNo-LQ-a7Z" firstAttribute="leading" secondItem="7dE-j5-Wae" secondAttribute="trailing" constant="8" id="sX1-H3-kWC"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bNo-LQ-a7Z" secondAttribute="trailing" id="spR-aq-Puc"/>

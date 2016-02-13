@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class TweetsViewController: UIViewController {
   
@@ -55,7 +56,7 @@ class TweetsViewController: UIViewController {
   }
 }
 
-extension TweetsViewController: UITableViewDelegate, UITableViewDataSource {
+extension TweetsViewController: UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, SFSafariViewControllerDelegate {
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if tweets == nil {
       return 0
@@ -68,7 +69,27 @@ extension TweetsViewController: UITableViewDelegate, UITableViewDataSource {
     let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
     
     cell.tweet = tweets![indexPath.row]
+    cell.delegate = self
     
     return cell
   }
+  
+  func tweetCell(cell: TweetCell, didTapURL url: NSURL) {
+    let svc = SFSafariViewController(URL: url)
+    let activeVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+    activeVC?.presentViewController(svc, animated: true, completion: nil)
+  }
+  
+  func tweetCell(cell: TweetCell, didTapUser username: String) {
+    //Figure this out later
+  }
+  
+  func tweetCell(cell: TweetCell, didTapHashtag hashtag: String) {
+    //Figure this out later
+  }
+  
+  func safariViewControllerDidFinish(controller: SFSafariViewController) {
+    controller.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
 }
