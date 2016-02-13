@@ -14,6 +14,7 @@ class TweetsViewController: UIViewController {
   
   @IBOutlet var tableView: UITableView!
   var tweets: [Tweet]?
+//  var refreshControl: UIRefreshControl!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,14 +25,13 @@ class TweetsViewController: UIViewController {
     tableView.dataSource = self
     
     tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 110
+    tableView.estimatedRowHeight = 130
     
-    TwitterClient.sharedInstance.homeTimeLineWithParams(nil) { (
-      tweets, error) -> () in
-      self.tweets = tweets
-      self.tableView.reloadData()
-    }
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+    tableView.insertSubview(refreshControl, atIndex: 0)
     
+    refresh(refreshControl)
     
   }
   
@@ -40,6 +40,15 @@ class TweetsViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
+  func refresh(refreshControl: UIRefreshControl) {
+    
+    TwitterClient.sharedInstance.homeTimeLineWithParams(nil) { (
+      tweets, error) -> () in
+      self.tweets = tweets
+      self.tableView.reloadData()
+      refreshControl.endRefreshing()
+    }
+  }
   
   /*
   // MARK: - Navigation
@@ -76,8 +85,7 @@ extension TweetsViewController: UITableViewDelegate, UITableViewDataSource, Twee
   
   func tweetCell(cell: TweetCell, didTapURL url: NSURL) {
     let svc = SFSafariViewController(URL: url)
-    let activeVC = UIApplication.sharedApplication().keyWindow?.rootViewController
-    activeVC?.presentViewController(svc, animated: true, completion: nil)
+    presentViewController(svc, animated: true, completion: nil)
   }
   
   func tweetCell(cell: TweetCell, didTapUser username: String) {

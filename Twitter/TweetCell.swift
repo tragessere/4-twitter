@@ -29,6 +29,12 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var favoriteView: UIView!
   @IBOutlet weak var favoriteLabel: UILabel!
   
+  @IBOutlet weak var isRetweetedView: UIView!
+  @IBOutlet weak var isRetweetedImageView: UIImageView!
+  @IBOutlet weak var retweetByLabel: UILabel!
+  @IBOutlet weak var retweetViewHeightConstraint: NSLayoutConstraint!
+  
+  
   var delegate: TweetCellDelegate?
   
   var tweet: Tweet! {
@@ -48,9 +54,19 @@ class TweetCell: UITableViewCell {
       if tweet.tweetIsRetweet! {
         nameLabel.text = tweet.originalUser?.name
         usernameLabel.text = "@" + tweet.originalUser!.screenName!
+        
+        retweetByLabel.text = (tweet.user?.name)! + " Retweeted"
+        
+        retweetByLabel.hidden = false
+        isRetweetedImageView.hidden = false
+        retweetViewHeightConstraint.constant = 24
       } else {
         nameLabel.text = tweet.user?.name
         usernameLabel.text = "@" + tweet.user!.screenName!
+        
+        retweetByLabel.hidden = true
+        isRetweetedImageView.hidden = true
+        retweetViewHeightConstraint.constant = 0
       }
       
       
