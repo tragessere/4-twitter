@@ -91,8 +91,9 @@ class TweetCell: UITableViewCell {
       }
       
       tweetTextLabel.tintColor = User.currentUser?.linkColor //tweet.user?.linkColor
-      tweetTextLabel.text = tweet.text
-      
+      if tweet.text != nil {
+        tweetTextLabel.text = tweet.text!.stringByDecodingHTMLEntities
+      }
       if tweet.retweetCount != nil {
         retweetLabel.text = String(tweet.retweetCount!)
       } else {

@@ -111,7 +111,9 @@ class TweetDetailsViewController: UIViewController {
       retweetCountLabel.textColor = tintColor!
       favoritesCountLabel.textColor = tintColor!
     }
-    tweetTextLabel.text = tweet!.text
+    if tweet!.text != nil {
+      tweetTextLabel.text = tweet!.text?.stringByDecodingHTMLEntities
+    }
     
     if tweet!.retweetCount != nil {
       retweetCountLabel.text = String(tweet!.retweetCount!)
