@@ -124,6 +124,14 @@ class TweetCell: UITableViewCell {
       tweetTextLabel.urlLinkTapHandler = { label, url, range in
         self.delegate?.tweetCell(self, didTapURL: NSURL(string: url)!)
       }
+      
+      tweetTextLabel.userHandleLinkTapHandler = { label, handle, range in
+        self.delegate?.tweetCell(self, didTapUser: handle)
+      }
+      
+      tweetTextLabel.hashtagLinkTapHandler = { label, hashtag, range in
+        self.delegate?.tweetCell(self, didTapHashtag: hashtag)
+      }
     }
   }
   
@@ -147,7 +155,6 @@ class TweetCell: UITableViewCell {
   }
   
   func retweetTapped(view: AnyObject) {
-    print("tapped retweet")
     
     if tweet.user?.id == User.currentUser?.id {
       print("can't retweet your own message")

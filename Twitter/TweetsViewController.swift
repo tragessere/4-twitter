@@ -50,15 +50,25 @@ class TweetsViewController: UIViewController {
     }
   }
   
-  /*
+  
   // MARK: - Navigation
   
   // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
   // Get the new view controller using segue.destinationViewController.
   // Pass the selected object to the new view controller.
+    if segue.identifier == "showDetailsView" {
+      let cell = sender as! UITableViewCell
+      let indexPath = tableView.indexPathForCell(cell)
+      
+      let detailsViewController = segue.destinationViewController as! TweetDetailsViewController
+      detailsViewController.tintColor = User.currentUser?.linkColor
+      detailsViewController.tweet = tweets![indexPath!.row]
+      
+    }
+    
   }
-  */
+
   
   @IBAction func onLogout(sender: AnyObject) {
     User.currentUser?.logout()
@@ -81,6 +91,11 @@ extension TweetsViewController: UITableViewDelegate, UITableViewDataSource, Twee
     cell.delegate = self
     
     return cell
+  }
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    
   }
   
   func tweetCell(cell: TweetCell, didTapURL url: NSURL) {
