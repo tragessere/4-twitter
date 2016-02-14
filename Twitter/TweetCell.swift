@@ -42,15 +42,6 @@ class TweetCell: UITableViewCell {
       profileImageView.layer.cornerRadius = 5
       profileImageView.layer.masksToBounds = true
       
-      if tweet.user?.profileImageUrl != nil {
-        profileImageView.image = nil
-        profileImageView.backgroundColor = UIColor.whiteColor()
-        profileImageView.setImageWithURL(NSURL(string: tweet.user!.profileImageUrl!)!)
-      } else {
-        profileImageView.image = nil
-        profileImageView.backgroundColor = tweet.user?.linkColor
-      }
-    
       if tweet.tweetIsRetweet! {
         nameLabel.text = tweet.originalUser?.name
         usernameLabel.text = "@" + tweet.originalUser!.screenName!
@@ -60,6 +51,17 @@ class TweetCell: UITableViewCell {
         retweetByLabel.hidden = false
         isRetweetedImageView.hidden = false
         retweetViewHeightConstraint.constant = 24
+        
+        if tweet.originalUser?.profileImageUrl != nil {
+          profileImageView.image = nil
+          profileImageView.backgroundColor = UIColor.whiteColor()
+          profileImageView.setImageWithURL(NSURL(string: tweet.originalUser!.profileImageUrl!)!)
+        } else {
+          profileImageView.image = nil
+          profileImageView.backgroundColor = tweet.originalUser?.linkColor
+        }
+        
+        
       } else {
         nameLabel.text = tweet.user?.name
         usernameLabel.text = "@" + tweet.user!.screenName!
@@ -67,6 +69,16 @@ class TweetCell: UITableViewCell {
         retweetByLabel.hidden = true
         isRetweetedImageView.hidden = true
         retweetViewHeightConstraint.constant = 0
+        
+        
+        if tweet.user?.profileImageUrl != nil {
+          profileImageView.image = nil
+          profileImageView.backgroundColor = UIColor.whiteColor()
+          profileImageView.setImageWithURL(NSURL(string: tweet.user!.profileImageUrl!)!)
+        } else {
+          profileImageView.image = nil
+          profileImageView.backgroundColor = tweet.user?.linkColor
+        }
       }
       
       
