@@ -17,15 +17,18 @@ PODS:
   - BDBOAuth1Manager (2.0.0):
     - AFNetworking/NSURLSession (~> 3.0.0)
   - KILabel (1.0.0)
+  - SAMTextView (0.2.2)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
   - KILabel (= 1.0.0)
+  - SAMTextView
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BDBOAuth1Manager: 92d17d06f8a648602962304cd2f35ae7394fa001
   KILabel: 84049969642d4ac1061ebe38ad4c0da37fed108b
+  SAMTextView: 979c43bb1fa5859ddfbfeb35e9c296a2b0ec55fd
 
 COCOAPODS: 0.39.0

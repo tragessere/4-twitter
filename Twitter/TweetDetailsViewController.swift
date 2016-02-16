@@ -24,7 +24,6 @@ class TweetDetailsViewController: UIViewController {
   @IBOutlet weak var retweetCountLabel: UILabel!
   @IBOutlet weak var favoritesCountLabel: UILabel!
   
-  @IBOutlet weak var replyImageView: UIImageView!
   @IBOutlet weak var retweetImageView: UIImageView!
   @IBOutlet weak var favoriteImageView: UIImageView!
   
@@ -36,10 +35,6 @@ class TweetDetailsViewController: UIViewController {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-  
-    let replyTapRecognizer = UITapGestureRecognizer(target: self, action: "replyTapped:")
-    replyImageView.userInteractionEnabled = true
-    replyImageView.addGestureRecognizer(replyTapRecognizer)
     
     let retweetTapRecognizer = UITapGestureRecognizer(target: self, action: "retweetTapped:")
     retweetImageView.userInteractionEnabled = true
@@ -164,15 +159,28 @@ class TweetDetailsViewController: UIViewController {
   }
   
   
-  /*
+  
   // MARK: - Navigation
   
   // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-  // Get the new view controller using segue.destinationViewController.
-  // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    
+    if segue.identifier == "barReply" || segue.identifier == "buttonReply" {
+      let navController = segue.destinationViewController as! UINavigationController
+      let replyController = navController.viewControllers.first as! CreateTweetViewController
+      
+      if tweet!.tweetIsRetweet != nil && tweet!.tweetIsRetweet! {
+        replyController.user = tweet?.originalUser
+        replyController.tweetId = tweet?.originalId
+      } else {
+        replyController.user = tweet?.user
+        replyController.tweetId = tweet?.id
+      }
+    }
   }
-  */
+
   
   func replyTapped(view: AnyObject) {
     //TODO: bring up ReplyViewController

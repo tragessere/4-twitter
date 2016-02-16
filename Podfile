@@ -7,5 +7,6 @@ target 'Twitter' do
 pod 'AFNetworking'
 pod 'BDBOAuth1Manager'
 pod 'KILabel', '1.0.0'
+pod 'SAMTextView'
 
 end

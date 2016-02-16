@@ -76,6 +76,26 @@ class TwitterClient: BDBOAuth1SessionManager {
     })
   }
   
+  
+  func postTweet(tweetText: String!, replyToId: Int64?, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+    let params : NSMutableDictionary = ["status": tweetText]
+    if replyToId != nil {
+      params.setObject(NSNumber(longLong: replyToId!), forKey: "in_reply_to_status_id")
+    }
+    
+    POST("1.1/statuses/update.json",
+      parameters: params,
+      progress: nil,
+      success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+        let tweet = Tweet.init(dictionary: response as! NSDictionary)
+        completion(tweet: tweet, error: nil)
+      },
+      failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+        completion(tweet: nil, error: error)
+      })
+  }
+  
+  
   func favoriteWithId(id: Int64, completion: (tweet: Tweet?, error: NSError?) -> ()) {
     let params : NSDictionary = ["id": NSNumber(longLong: id)]
     

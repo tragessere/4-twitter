@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		204025FF1C7286830065F41F /* CreateTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204025FE1C7286830065F41F /* CreateTweetViewController.swift */; };
 		20403C131C67AC4200A99843 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20403C121C67AC4200A99843 /* AppDelegate.swift */; };
 		20403C151C67AC4200A99843 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20403C141C67AC4200A99843 /* ViewController.swift */; };
 		20403C181C67AC4200A99843 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20403C161C67AC4200A99843 /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		1D3BDEEE878B8BDAA9EBAF95 /* Pods_Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		204025FE1C7286830065F41F /* CreateTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTweetViewController.swift; sourceTree = "<group>"; };
 		20403C0F1C67AC4200A99843 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20403C121C67AC4200A99843 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20403C141C67AC4200A99843 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				20403C2E1C67CE7200A99843 /* TweetsViewController.swift */,
 				206DD33C1C6A968C002C1581 /* TweetCell.swift */,
 				2045928D1C70F7E700FEF1D7 /* TweetDetailsViewController.swift */,
+				204025FE1C7286830065F41F /* CreateTweetViewController.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				20403C2D1C67C21700A99843 /* Tweet.swift in Sources */,
 				20403C2F1C67CE7200A99843 /* TweetsViewController.swift in Sources */,
 				204592901C71194400FEF1D7 /* HTMLDecode.swift in Sources */,
+				204025FF1C7286830065F41F /* CreateTweetViewController.swift in Sources */,
 				20403C151C67AC4200A99843 /* ViewController.swift in Sources */,
 				20403C261C67AD3C00A99843 /* TwitterClient.swift in Sources */,
 				20403C131C67AC4200A99843 /* AppDelegate.swift in Sources */,
