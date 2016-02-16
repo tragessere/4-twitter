@@ -311,16 +311,21 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yh8-Ql-kX3" customClass="SAMTextView">
-                                <rect key="frame" x="20" y="128" width="560" height="250"/>
+                                <rect key="frame" x="20" y="128" width="560" height="472"/>
                                 <color key="backgroundColor" red="0.92398595328282818" green="0.92398595328282818" blue="0.92398595328282818" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="PVR-TT-NNp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="PVR-TT-NNp"/>
+                                    </mask>
+                                </variation>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Atf-n6-OJU">
-                                <rect key="frame" x="556" y="361" width="24" height="17"/>
+                                <rect key="frame" x="556" y="583" width="24" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.35133782679738557" green="0.35133782679738557" blue="0.35133782679738557" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -328,11 +333,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Atf-n6-OJU" firstAttribute="trailing" secondItem="Yh8-Ql-kX3" secondAttribute="trailing" id="3n2-Fj-OqT"/>
+                            <constraint firstItem="Atf-n6-OJU" firstAttribute="bottom" secondItem="Yh8-Ql-kX3" secondAttribute="bottom" id="9ww-v9-R1T"/>
                             <constraint firstItem="XPf-hs-jUt" firstAttribute="trailing" secondItem="sNJ-xT-Zb9" secondAttribute="trailingMargin" id="Fhb-tM-SA7"/>
                             <constraint firstItem="XPf-hs-jUt" firstAttribute="top" secondItem="DGx-kh-7L0" secondAttribute="bottom" constant="8" id="U2H-Zj-CUq"/>
                             <constraint firstItem="XPf-hs-jUt" firstAttribute="leading" secondItem="sNJ-xT-Zb9" secondAttribute="leadingMargin" id="Wil-OY-dfC"/>
-                            <constraint firstItem="Atf-n6-OJU" firstAttribute="bottom" secondItem="Yh8-Ql-kX3" secondAttribute="bottom" id="dbN-EJ-XCQ"/>
+                            <constraint firstItem="Atf-n6-OJU" firstAttribute="trailing" secondItem="Yh8-Ql-kX3" secondAttribute="trailing" id="k3j-Bi-kaQ"/>
+                            <constraint firstItem="Gx5-fr-MzP" firstAttribute="top" secondItem="Yh8-Ql-kX3" secondAttribute="bottom" id="lhs-91-InK"/>
                             <constraint firstItem="Yh8-Ql-kX3" firstAttribute="leading" secondItem="sNJ-xT-Zb9" secondAttribute="leadingMargin" id="pCE-tA-9w3"/>
                             <constraint firstItem="Yh8-Ql-kX3" firstAttribute="top" secondItem="XPf-hs-jUt" secondAttribute="bottom" id="tbd-Vl-bxR"/>
                             <constraint firstItem="Yh8-Ql-kX3" firstAttribute="trailing" secondItem="sNJ-xT-Zb9" secondAttribute="trailingMargin" id="uYC-0g-Gcd"/>
@@ -358,6 +364,7 @@
                         <outlet property="navigationItem" destination="AyI-cj-at1" id="GVy-WG-122"/>
                         <outlet property="profileImageView" destination="Pwv-rR-4U1" id="43G-xR-Fkc"/>
                         <outlet property="replyToHeightConstraint" destination="y5j-p0-pZh" id="Fh7-wh-Qku"/>
+                        <outlet property="tweetBottomConstraint" destination="lhs-91-InK" id="BFS-sA-6SJ"/>
                         <outlet property="tweetHeightConstraint" destination="PVR-TT-NNp" id="bpz-5V-Xco"/>
                         <outlet property="tweetTextView" destination="Yh8-Ql-kX3" id="PnO-PA-TI8"/>
                         <outlet property="usernameLabel" destination="8RF-Tc-fSm" id="r7V-we-ae5"/>

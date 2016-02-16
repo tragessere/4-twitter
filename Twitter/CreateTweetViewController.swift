@@ -10,14 +10,13 @@ import UIKit
 import SAMTextView
 
 class CreateTweetViewController: UIViewController {
-  @IBOutlet weak var CreateTweetNavigationItem: UINavigationItem!
-  
   @IBOutlet weak var replyToHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var profileImageView: UIImageView!
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var usernameLabel: UILabel!
   
   @IBOutlet weak var tweetHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var tweetBottomConstraint: NSLayoutConstraint!
   @IBOutlet weak var tweetTextView: SAMTextView!
   @IBOutlet weak var characterCountLabel: UILabel!
   
@@ -50,6 +49,18 @@ class CreateTweetViewController: UIViewController {
       usernameLabel.hidden = true
     }
     
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
+    
+    
+    tweetTextView.becomeFirstResponder()
+  }
+  
+  func keyboardWillAppear(notification: NSNotification) {
+    if let userInfo = notification.userInfo {
+      if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+        tweetBottomConstraint.constant = keyboardSize.height + 12
+      }
+    }
   }
   
   
@@ -60,6 +71,7 @@ class CreateTweetViewController: UIViewController {
   
   
   @IBAction func didCancel(sender: AnyObject) {
+    tweetTextView.resignFirstResponder()
     dismissViewControllerAnimated(true, completion: nil)
   }
   
@@ -76,6 +88,7 @@ class CreateTweetViewController: UIViewController {
       }
       
       //Add a delegate to save new tweet
+      self.tweetTextView.resignFirstResponder()
       self.dismissViewControllerAnimated(true, completion: nil)
     })
   }
