@@ -24,8 +24,9 @@ class TweetDetailsViewController: UIViewController {
   @IBOutlet weak var retweetCountLabel: UILabel!
   @IBOutlet weak var favoritesCountLabel: UILabel!
   
-  @IBOutlet weak var retweetImageView: UIImageView!
-  @IBOutlet weak var favoriteImageView: UIImageView!
+
+  @IBOutlet weak var retweetButton: UIButton!
+  @IBOutlet weak var favoriteButton: UIButton!
   
   var tintColor: UIColor?
   var tweet: Tweet?
@@ -36,13 +37,13 @@ class TweetDetailsViewController: UIViewController {
     
     // Do any additional setup after loading the view.
     
-    let retweetTapRecognizer = UITapGestureRecognizer(target: self, action: "retweetTapped:")
-    retweetImageView.userInteractionEnabled = true
-    retweetImageView.addGestureRecognizer(retweetTapRecognizer)
-    
-    let favoriteTapRecognizer = UITapGestureRecognizer(target: self, action: "favoriteTapped:")
-    favoriteImageView.userInteractionEnabled = true
-    favoriteImageView.addGestureRecognizer(favoriteTapRecognizer)
+//    let retweetTapRecognizer = UITapGestureRecognizer(target: self, action: "retweetTapped:")
+//    retweetImageView.userInteractionEnabled = true
+//    retweetImageView.addGestureRecognizer(retweetTapRecognizer)
+//    
+//    let favoriteTapRecognizer = UITapGestureRecognizer(target: self, action: "favoriteTapped:")
+//    favoriteImageView.userInteractionEnabled = true
+//    favoriteImageView.addGestureRecognizer(favoriteTapRecognizer)
     
     
     
@@ -122,21 +123,7 @@ class TweetDetailsViewController: UIViewController {
       favoritesCountLabel.text = "0"
     }
     
-    
-    if tweet!.isFavorited! {
-      favoriteImageView.image = UIImage(named: "like-action-on")
-    } else {
-      favoriteImageView.image = UIImage(named: "like-action")
-    }
-    
-    if tweet!.user?.id == User.currentUser?.id {
-      retweetImageView.image = UIImage(named: "retweet-action-inactive")
-    } else if tweet!.isRetweeted! {
-      retweetImageView.image = UIImage(named: "retweet-action-on")
-    } else {
-      retweetImageView.image = UIImage(named: "retweet-action")
-    }
-    
+    setImageButtons()
     
     
     tweetTextLabel.urlLinkTapHandler = { label, url, range in
@@ -182,16 +169,123 @@ class TweetDetailsViewController: UIViewController {
   }
 
   
-  func replyTapped(view: AnyObject) {
-    //TODO: bring up ReplyViewController
+  @IBAction func didTapRetweet(sender: AnyObject) {
+    print("tapped retweet")
+    
+    if tweet!.isRetweeted! {
+      print("un-retweet")
+      
+      TwitterClient.sharedInstance.unRetweetWithId(tweet!.originalId!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error retweeting: \(error!.description)")
+          return
+        }
+        
+        self.tweet!.isRetweeted = false
+        if tweet != nil && tweet!.retweetCount != nil {
+          self.tweet!.retweetCount!--
+          self.retweetCountLabel.text = String(self.tweet!.retweetCount!)
+        } else {
+          self.retweetCountLabel.text = "0"
+        }
+        
+        self.setImageButtons()
+      })
+      
+    } else {
+      print("retweet")
+      TwitterClient.sharedInstance.retweetWithId(tweet!.originalId!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error retweeting: \(error!.description)")
+          return
+        }
+        
+        self.tweet!.isRetweeted = true
+        
+        if tweet != nil && tweet!.retweetCount != nil {
+          self.tweet!.retweetCount!++
+          self.retweetCountLabel.text = String(self.tweet!.retweetCount!)
+        } else {
+          self.retweetCountLabel.text = "0"
+        }
+        
+        self.setImageButtons()
+      })
+    }
+
   }
   
-  func retweetTapped(view: AnyObject) {
-    //TODO: do this
+  @IBAction func didTapFavorite(sender: AnyObject) {
+    print("tapped favorite")
+    
+    if !tweet!.isFavorited! {
+      TwitterClient.sharedInstance.favoriteWithId(tweet!.id!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error favoriting tweet: \(error!.description)")
+          return
+        }
+        
+        self.tweet!.isFavorited = tweet?.isFavorited
+        self.tweet!.favoriteCount = tweet?.favoriteCount
+        
+        if tweet != nil && tweet!.favoriteCount != nil {
+          self.favoritesCountLabel.text = String(tweet!.favoriteCount!)
+        } else {
+          self.favoritesCountLabel.text = "0"
+        }
+        
+        self.setImageButtons()
+      })
+    }
+      
+    else {
+      TwitterClient.sharedInstance.unFavoriteWithId(tweet!.id!, completion: {
+        (tweet, error) -> () in
+        if error != nil {
+          print("error un-favoriting tweet: \(error!.description)")
+          return
+        }
+        
+        self.tweet!.isFavorited = tweet?.isFavorited
+        self.tweet!.favoriteCount = tweet?.favoriteCount
+        
+        if tweet!.favoriteCount != nil {
+          self.favoritesCountLabel.text = String(tweet!.favoriteCount!)
+        } else {
+          self.favoritesCountLabel.text = "0"
+        }
+        
+//        self.favoriteImageView.image = UIImage(named: "like-action")
+        self.setImageButtons()
+      })
+    }
   }
   
-  func favoriteTapped(view: AnyObject) {
-    //TODO: do this
+  func setImageButtons() {
+    if tweet == nil {
+      favoriteButton.enabled = false
+    } else if tweet!.isFavorited! {
+      favoriteButton.setImage(UIImage(named: "like-action-on"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "like-action-on-pressed"), forState: UIControlState.Highlighted)
+    } else {
+      favoriteButton.setImage(UIImage(named: "like-action"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "like-action-pressed"), forState: UIControlState.Highlighted)
+    }
+    
+    if tweet == nil || tweet!.user?.id == User.currentUser?.id {
+      retweetButton.enabled = false
+    } else if tweet!.isRetweeted! {
+      retweetButton.enabled = true
+      retweetButton.setImage(UIImage(named: "retweet-action-on"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet-action-on-pressed"), forState: UIControlState.Highlighted)
+    } else {
+      retweetButton.enabled = true
+      retweetButton.setImage(UIImage(named: "retweet-action"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet-action-pressed"), forState: UIControlState.Highlighted)
+    }
   }
   
 }
