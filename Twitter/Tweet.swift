@@ -66,6 +66,7 @@ class Tweet: NSObject {
       tweetIsRetweet = false
       
       originalId = id
+      originalUser = user
     }
   }
   

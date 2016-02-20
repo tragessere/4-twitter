@@ -66,6 +66,12 @@ class TweetsViewController: UIViewController {
       detailsViewController.tintColor = User.currentUser?.linkColor
       detailsViewController.tweet = tweets![indexPath!.row]
       
+    } else if segue.identifier == "profileSegue" {
+      let cell = sender as! UITableViewCell
+      let indexPath = tableView.indexPathForCell(cell)
+      
+      let profileViewController = segue.destinationViewController as! ProfilePageController
+      profileViewController.user = (tweets![indexPath!.row]).originalUser
     }
     
   }
@@ -110,6 +116,10 @@ extension TweetsViewController: UITableViewDelegate, UITableViewDataSource, Twee
   
   func tweetCell(cell: TweetCell, didTapHashtag hashtag: String) {
     //Figure this out later
+  }
+  
+  func tweetCell(cell: TweetCell, didTapProfile user: User) {
+    performSegueWithIdentifier("profileSegue", sender: cell)
   }
   
   func safariViewControllerDidFinish(controller: SFSafariViewController) {

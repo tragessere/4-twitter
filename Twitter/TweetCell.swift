@@ -13,6 +13,7 @@ protocol TweetCellDelegate {
   func tweetCell(cell: TweetCell, didTapURL url: NSURL)
   func tweetCell(cell: TweetCell, didTapUser username: String)
   func tweetCell(cell: TweetCell, didTapHashtag hashtag: String)
+  func tweetCell(cell: TweetCell, didTapProfile user: User)
 }
 
 class TweetCell: UITableViewCell {
@@ -147,6 +148,10 @@ class TweetCell: UITableViewCell {
     let favoriteTapRecognizer = UITapGestureRecognizer(target: self, action: "favoriteTapped:")
     favoriteView.userInteractionEnabled = true
     favoriteView.addGestureRecognizer(favoriteTapRecognizer)
+    
+    let profileTapRecognizer = UITapGestureRecognizer(target: self, action: "profileTapped:")
+    profileImageView.userInteractionEnabled = true
+    profileImageView.addGestureRecognizer(profileTapRecognizer)
   }
   
   override func setSelected(selected: Bool, animated: Bool) {
@@ -252,4 +257,9 @@ class TweetCell: UITableViewCell {
       })
     }
   }
+  
+  func profileTapped(view: AnyObject) {
+    delegate?.tweetCell(self, didTapProfile: tweet.user!)
+  }
+  
 }

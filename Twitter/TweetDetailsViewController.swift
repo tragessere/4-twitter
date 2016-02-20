@@ -170,11 +170,8 @@ class TweetDetailsViewController: UIViewController {
 
   
   @IBAction func didTapRetweet(sender: AnyObject) {
-    print("tapped retweet")
     
     if tweet!.isRetweeted! {
-      print("un-retweet")
-      
       TwitterClient.sharedInstance.unRetweetWithId(tweet!.originalId!, completion: {
         (tweet, error) -> () in
         if error != nil {
@@ -194,7 +191,6 @@ class TweetDetailsViewController: UIViewController {
       })
       
     } else {
-      print("retweet")
       TwitterClient.sharedInstance.retweetWithId(tweet!.originalId!, completion: {
         (tweet, error) -> () in
         if error != nil {
@@ -218,7 +214,6 @@ class TweetDetailsViewController: UIViewController {
   }
   
   @IBAction func didTapFavorite(sender: AnyObject) {
-    print("tapped favorite")
     
     if !tweet!.isFavorited! {
       TwitterClient.sharedInstance.favoriteWithId(tweet!.id!, completion: {
@@ -258,7 +253,6 @@ class TweetDetailsViewController: UIViewController {
           self.favoritesCountLabel.text = "0"
         }
         
-//        self.favoriteImageView.image = UIImage(named: "like-action")
         self.setImageButtons()
       })
     }
