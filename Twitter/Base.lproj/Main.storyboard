@@ -635,20 +635,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fBi-dX-Tjh">
-                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="fBi-dX-Tjh" secondAttribute="height" multiplier="150:50" id="EAE-f7-DRE"/>
-                                    <constraint firstAttribute="height" constant="164" id="M4A-do-kaR"/>
-                                    <constraint firstAttribute="width" constant="600" id="hvF-wn-bcB"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="M4A-do-kaR"/>
-                                        <exclude reference="hvF-wn-bcB"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhd-3O-otz">
                                 <rect key="frame" x="158" y="275" width="62" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -728,6 +714,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcQ-hr-JVd">
+                                <rect key="frame" x="156" y="375" width="34" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fG7-SF-KpC">
                                 <rect key="frame" x="20" y="366" width="560" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -780,12 +772,23 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="nKf-Qk-871"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcQ-hr-JVd">
-                                <rect key="frame" x="156" y="375" width="34" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fBi-dX-Tjh">
+                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fBi-dX-Tjh" secondAttribute="height" multiplier="150:50" id="EAE-f7-DRE"/>
+                                    <constraint firstAttribute="height" constant="164" id="M4A-do-kaR"/>
+                                    <constraint firstAttribute="width" constant="600" id="hvF-wn-bcB"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="M4A-do-kaR"/>
+                                        <exclude reference="hvF-wn-bcB"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

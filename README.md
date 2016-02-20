@@ -67,7 +67,7 @@ Describe any challenges encountered while building the app.
 
 # Project 5 - *Twitter, Week 2*
 
-Time spent: **5** hours spent in total
+Time spent: **9** hours spent in total
 
 ## User Stories
 
@@ -75,9 +75,9 @@ The following **required** functionality is completed:
 
 - [x] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [ ] Profile page:
-- [ ] Contains the user header view
-- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Home Timeline: Tapping on a user image should bring up that user's profile page
+- [x] Contains the user header view
+- [x] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Home Timeline: Tapping on a user image should bring up that user's profile page
 - [x] Compose Page: User can compose a new tweet by tapping on a compose button.
 
 The following **optional** features are implemented:
@@ -96,24 +96,26 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] The new tweet / reply page text field resizes itself to be above the keyboard (no matter what height it is)
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Nesting the same view controller.
+2. Best way to add the user's replies to the timeline without reloading. For new tweets a delegate can pass it up, but for replies this would take two delegates to pass the new tweet back two views. Should the tweets be a globally accessable variable or is this the best way to do it?
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![walkthrough](twitter-demo-2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+* Evenly spacing the detail information on the profile page. Used extra views to center the labels in the grid.
 
 ## License
 

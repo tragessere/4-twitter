@@ -28,7 +28,12 @@ class ProfilePageController: UIViewController {
     super.viewDidLoad()
     
     if let user = user {
-      bannerImageView.setImageWithURL(NSURL(string: user.profileBannerUrl!)!)
+      if user.profileBannerUrl != nil {
+        bannerImageView.setImageWithURL(NSURL(string: user.profileBannerUrl!)!)
+      } else {
+        bannerImageView.image = nil
+        bannerImageView.backgroundColor = user.linkColor
+      }
       profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!)!)
       nameLabel.text = user.name
       usernameLabel.text = "@" + user.screenName!

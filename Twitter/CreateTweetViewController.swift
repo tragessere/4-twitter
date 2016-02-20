@@ -38,6 +38,7 @@ class CreateTweetViewController: UIViewController {
         profileImageView.setImageWithURL(NSURL(string: user!.profileImageUrl!)!)
       }
       
+      tweetTextView.text = "@" + user!.screenName! + " "
       
       nameLabel.text = user?.name
       usernameLabel.text = "@" + user!.screenName!
@@ -101,8 +102,8 @@ extension CreateTweetViewController: UITextViewDelegate {
   }
   
   func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-//    let newText = textView.text.stringByReplacingCharactersInRange(range, withString: text)
     let currentCharacterCount = textView.text.characters.count ?? 0
+    
     if (range.length + range.location > currentCharacterCount) {
       return false
     }
